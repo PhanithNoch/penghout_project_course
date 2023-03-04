@@ -1,20 +1,62 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/data/provider/auth_provider.dart';
+import 'package:flutter_authentication/data/repo/auth_repo.dart';
+import 'package:flutter_authentication/views/screens/profile_screen.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
-  final controller = Get.put(MainController());
+  final controller = Get.put(MainController(AuthRepo(AuthProvider(Dio()))));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: ListView(
+          child: GetBuilder<MainController>(
+        builder: (controller) => ListView(
+          padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              child: Text('Drawer Header'),
+            UserAccountsDrawerHeader(
+              accountName: Text(
+                controller.currentUser.data?.name ?? '',
+              ),
+              accountEmail: Text(
+                '${controller.currentUser.data!.email}',
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  controller.currentUser.data!.image!,
+                ),
+              ),
+            ),
+
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+              trailing: Icon(Icons.arrow_forward_ios),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () async {
+                await Get.to(
+                  () => ProfileScreen(),
+                  arguments: controller.currentUser,
+                );
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Get.back();
+                controller.getCurrentUser();
+              },
+              trailing: Icon(Icons.arrow_forward_ios),
             ),
 
             /// switch theme button here
@@ -37,10 +79,11 @@ class MainScreen extends StatelessWidget {
             ListTile(
               title: const Text('Logout'),
               onTap: () => controller.logout(),
+              trailing: Icon(Icons.arrow_forward_ios),
             ),
           ],
         ),
-      ),
+      )),
       appBar: AppBar(
         title: Text('Main Screen'),
         actions: [

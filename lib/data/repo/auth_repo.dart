@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 
+import '../models/user/current_user_res_model.dart';
 import '../provider/auth_provider.dart';
 import 'dart:io';
 
@@ -17,5 +18,16 @@ class AuthRepo {
       required File profile}) async {
     return await _authProvider.register(
         email: email, name: name, password: password, profile: profile);
+  }
+
+  /// get current user function
+  Future<Either<String, CurrentUserResModel>> getCurrentUser() async {
+    return await _authProvider.getMe();
+  }
+
+  /// update user
+  Future<Either<String, String>> updateUser(
+      {String? name, File? profile, required String id}) async {
+    return await _authProvider.updateUser(name: name, profile: profile, id: id);
   }
 }
