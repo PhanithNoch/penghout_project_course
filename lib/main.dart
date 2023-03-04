@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/views/screens/get_location_lat_lng.dart';
+import 'package:flutter_authentication/views/screens/get_location_page.dart';
 import 'package:flutter_authentication/views/screens/language_screen.dart';
+import 'package:flutter_authentication/views/screens/location_screen.dart';
 import 'package:flutter_authentication/views/screens/login_screen.dart';
 import 'package:flutter_authentication/views/screens/main_screen.dart';
 import 'package:flutter_authentication/views/screens/splash_screen.dart';
@@ -62,10 +65,9 @@ class MyApp extends StatelessWidget {
 
       fallbackLocale: const Locale('en', 'US'),
       title: 'Flutter Demo',
-
       // home: MainScreen(),
       // initialRoute: 'main',
-      home: SplashScreen(),
+      home: LocationScreen(),
       // home: LanguagesScreen(),
       getPages: [
         GetPage(
