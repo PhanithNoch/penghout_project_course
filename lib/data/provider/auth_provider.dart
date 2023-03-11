@@ -126,4 +126,19 @@ class AuthProvider {
       return Left('Something went wrong');
     }
   }
+
+  Future<Either<String, String>> logout() async {
+    final res = await _dio.post("${kBaseUrl}/logout",
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${_storage.read('token')}'
+        }));
+
+    if (res.statusCode == 200) {
+      return Right('User logout successfully');
+    } else {
+      return Left('Something went wrong');
+    }
+  }
 }

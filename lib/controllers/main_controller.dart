@@ -42,11 +42,6 @@ class MainController extends GetxController {
     }
   }
 
-  void logout() {
-    _storage.remove('token');
-    Get.offAllNamed('/login');
-  }
-
   /// switch theme
   void switchTheme() {
     // Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
@@ -58,5 +53,16 @@ class MainController extends GetxController {
       Get.changeThemeMode(ThemeMode.dark);
     }
     update();
+  }
+
+//  logout function
+  void logout() async {
+    final res = await _authRepo.logout();
+    res.fold((l) {
+      Get.snackbar('Error', l);
+    }, (r) {
+      _storage.remove('token');
+      Get.offAllNamed('/login');
+    });
   }
 }

@@ -30,4 +30,9 @@ class AuthRepo {
       {String? name, File? profile, required String id}) async {
     return await _authProvider.updateUser(name: name, profile: profile, id: id);
   }
+
+  /// logout
+  Future<Either<String, String>> logout() async {
+    return await _authProvider.logout();
+  }
 }
