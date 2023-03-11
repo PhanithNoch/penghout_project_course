@@ -4,7 +4,8 @@ import '../../controllers/post/create_post_controller.dart';
 
 class UploadPhotoScreen extends StatelessWidget {
   UploadPhotoScreen({Key? key}) : super(key: key);
-  final controller = Get.put(CreatePostController());
+  final controller = Get.find<CreatePostController>();
+  final captionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class UploadPhotoScreen extends StatelessWidget {
             onPressed: () {
               print('post button pressed');
               // controller.createPost();
+              controller.uploadPost(caption: captionController.text);
             },
             child: Text(
               'Post',
@@ -30,6 +32,7 @@ class UploadPhotoScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(2.0),
             child: TextField(
+              controller: captionController,
               maxLines: 3,
               decoration: InputDecoration(
                 hintText: "What's on your mind?",

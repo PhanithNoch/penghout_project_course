@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/bindings/post_binding.dart';
 import 'package:flutter_authentication/data/provider/auth_provider.dart';
 import 'package:flutter_authentication/data/repo/auth_repo.dart';
 import 'package:flutter_authentication/views/screens/profile_screen.dart';
@@ -120,7 +121,14 @@ class MainScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(() => UploadPhotoScreen());
+                        Get.to(
+                          () => UploadPhotoScreen(),
+                          binding: PostBinding(),
+                        )?.then((value) {
+                          if (value != null) {
+                            /// refresh the feed
+                          }
+                        });
                       },
                       child: Row(
                         children: const [
